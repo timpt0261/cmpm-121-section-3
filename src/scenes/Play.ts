@@ -46,21 +46,21 @@ export default class Play extends Phaser.Scene {
 
   update(_timeMs: number, delta: number) {
     this.starfield!.tilePositionX -= 4;
-
-    if (this.left!.isDown) {
-      this.spinner!.x -= delta;
-    }
-    if (this.right!.isDown) {
-      this.spinner!.x += delta;
-    }
-
     if (this.fire!.isDown) {
-      this.tweens.add({
-        targets: this.spinner,
-        scale: { from: 1.5, to: 1 },
-        duration: 300,
-        ease: Phaser.Math.Easing.Sine.Out,
-      });
+      if (this.left!.isDown) {
+        this.spinner!.x -= delta;
+      }
+      if (this.right!.isDown) {
+        this.spinner!.x += delta;
+      }
+    }
+
+    if (this.fire!.isDown && this.spinner!.y >= 25) {
+      this.spinner!.y -= delta;
+    }
+
+    if (this.fire!.isUp && this.spinner!.y <= 50) {
+      this.spinner!.y += 375;
     }
   }
 }
